@@ -1,6 +1,7 @@
 import { defaultTheme } from '@vuepress/theme-default'
 import { defineUserConfig } from 'vuepress'
 import { viteBundler } from '@vuepress/bundler-vite'
+import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default defineUserConfig({
   lang: 'en-US',
@@ -18,5 +19,12 @@ export default defineUserConfig({
     ],
   }),
 
+  plugins: [
+    mdEnhancePlugin({
+      // 启用 mermaid
+      mermaid: true,
+    }),
+  ],
+  
   bundler: viteBundler(),
 })

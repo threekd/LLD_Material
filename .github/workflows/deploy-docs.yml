@@ -21,22 +21,24 @@ jobs:
           # if your docs needs submodules, uncomment the following line
           # submodules: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
       - name: Install Deps
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build Docs
         env:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
-          npm run docs:build
+          pnpm run docs:build
           > docs/.vuepress/dist/.nojekyll
 
       - name: Deploy Docs
