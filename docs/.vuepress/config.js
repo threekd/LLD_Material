@@ -6,8 +6,8 @@ import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 export default defineUserConfig({
   lang: 'en-US',
   base: '/LLD_Material/',
-  title: 'VuePress',
-  description: 'My first VuePress Site',
+  title: 'LLD_Material',
+  description: 'Low Level Design for Material Module',
 
   theme: defaultTheme({
     logo: 'https://vuejs.press/images/hero.png',
@@ -21,8 +21,7 @@ export default defineUserConfig({
 
   plugins: [
     mdEnhancePlugin({
-      // 启用 mermaid
-      mermaid: true,
+      flowchart: true,
     }),
   ],
   
