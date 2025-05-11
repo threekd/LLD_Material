@@ -22,6 +22,7 @@ export default defineUserConfig({
   plugins: [
     mdEnhancePlugin({
       flowchart: true,
+      mermaid: true,
     }),
   ],
   

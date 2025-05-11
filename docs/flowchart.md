@@ -1,32 +1,20 @@
-# Flowchart for Procurement Process
-
-## Inventory Management
-
-```flow:vue
-
-index=>operation: Index
-material_info=>inputoutput: + Material info.
-material_list=>operation: Material list
-Batch_info=>inputoutput: + Batch info.
-inventory_details=>operation: Inventory Details
-
-index->material_info->material_list->Batch_info->inventory_details
-
-index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@>Batch_info({"stroke":"#9E9E9E"})@>inventory_details({"stroke":"#9E9E9E"})
-
-```
+# Flowchart
 
 ## Procurement Process
 
-```flow:vue
+```mermaid
 
-purchase_request=>operation: + Purchase Request
-purchase_item=>inputoutput: Purchase Item
-create_order=>operation: + Create Purchase Order
-supplier_confirmation=>subroutine: Supplier Delivery
-receipt_confirmation=>operation: Receipt Confirmation
-stock_in=>operation: Stock In
+graph TD
+    st([Start]) --> add_request[Requestor Submits Purchase Request]
+    add_request --> purchase_item[Purchase Details]
+    purchase_item --> add_purchase_order[Generate Purchase Order]
+    add_purchase_order --> create_PO[Place Order and Confirm Purchase]
+    create_PO --> supplier_confirm[Supplier Confirms Order and Ships Goods]
+    supplier_confirm --> receive_check{Purchaser Receives and Inspects Goods}
+    receive_check -->|Good| good_category{Is it a Consumable?}
+    receive_check -->|Broken| good_exchange[Contact Supplier for Return/Exchange] --> supplier_confirm
+    good_category -->|Yes| buyer_gr[Purchaser Stocks Goods] --> process_end([Process End])
+    good_category -->|No| user_gr[Requestor Stocks Goods] --> process_end([Process End])
 
-purchase_request->purchase_item->create_order->supplier_confirmation->receipt_confirmation->stock_in
 
 ```
