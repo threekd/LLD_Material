@@ -60,7 +60,21 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 - All
 
 #### 权限设置
-
+- APTC Members:
+    - View (all)
+    - Edit (none)
+    - Delete (none)
+    - Add
+- APP Manager:
+    - View (all)
+    - Edit (all)
+    - Delete (none)
+    - Add
+- Admin:
+    - View (all)
+    - Edit (all)
+    - Delete (all)
+    - Add
 ### 物料清单 | Material List
 > 此表单定义了与物质本身性质相关的内容，不包括批次信息。
 
@@ -127,7 +141,16 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - **当前库存总量** < **安全库存**
 
 #### 权限设置
-
+- APTC Members:
+    - View (all)
+    - Edit (own)
+    - Delete (none)
+    - Add
+- APP Manager:
+    - View (all)
+    - Edit (all)
+    - Delete (none)
+    - Add
 ### 库存明细 | Inventory Details
 > 此表单在 **物料清单 | Material List** 的基础上增加了批次信息及其验收记录。
 #### 字段
@@ -215,6 +238,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 #### 业务规则
 - When Material Status **Is one of** 已停用 | Disabled，已过期 | Expired
     - Read-only all fields
+- When Material Type **is any of** 管控物质 | Controlled
+    - Show **Tab - 危化品领用单**
 
 #### 工作流
 - None
@@ -224,6 +249,16 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 - 已过期
 
 #### 权限设置
+- APTC Members:
+    - View (all)
+    - Edit (own)
+    - Delete (none)
+    - Add
+- APP Manager:
+    - View (all)
+    - Edit (all)
+    - Delete (all)
+    - Add
 
 ## Purchase:
 
@@ -231,7 +266,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 
 purchase_request=>operation: + Purchase Request
 purchase_item=>inputoutput: Purchase Item
-create_order=>operation: Create Purchase Order
+create_order=>operation: + Create Purchase Order
 supplier_confirmation=>subroutine: Supplier Delivery
 receipt_confirmation=>operation: Receipt Confirmation
 stock_in=>operation: Stock In
@@ -276,14 +311,22 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
     - Read-only all fields
 
 #### 工作流
+- None
 
 #### 视图
 - All
 
 #### 权限设置
 - APTC Members:
-    - View (All)
-    - Edit (Owner)
+    - View (own)
+    - Edit (own)
+    - Delete (own)
+    - Add
+- APP Manager:
+    - View (all)
+    - Edit (all)
+    - Delete (all)
+    - Add
 
 ### 采购明细 | Purchase Item
 
@@ -349,12 +392,27 @@ Batch Data Source:
     - Conditional: Status of Goods **is** Initial
 
 #### 业务规则
+- none
 
 #### 工作流
+- none
 
 #### 视图
+- All
+- My
+    - Filter: Requisitioner | 请购员 **equals** Current User
 
 #### 权限设置
+- APTC Members:
+    - View (own)
+    - Edit (own)
+    - Delete (own)
+    - Add
+- APP Manager:
+    - View (all)
+    - Edit (all)
+    - Delete (all)
+    - Add
 
 ### 采购单 | Purchase Order
 
@@ -393,10 +451,19 @@ Single Data Source:
     - Read-only all fields
 
 #### 工作流
+- None
 
 #### 视图
+- All
 
 #### 权限设置
+- APTC Members:
+    - View (none)
+- APP Manager:
+    - View (all)
+    - Edit (own)
+    - Delete (none)
+    - Add
 
 ## Change Log
 
@@ -414,15 +481,28 @@ Single Data Source:
 
 
 #### 按钮
+- None
 
 #### 业务规则
+- None
 
 #### 工作流
+- None
 
 #### 视图
+- All
 
 #### 权限设置
-
+- APTC Members:
+    - View (own)
+    - Edit (none)
+    - Delete (none)
+    - Add
+- APP Manager:
+    - View (all)
+    - Edit (none)
+    - Delete (none)
+    - Add
 
 ### 入库单
 
@@ -443,11 +523,13 @@ Single Data Source:
 - 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
 
 #### 按钮
+- None
 
 #### 业务规则
+- None
 
 #### 工作流
-
+- None
 ##### When adding new records:
 - 当MSDS不为空，更新物料清单中的MSDS
 >（可能会出问题，若有人上传错误文件，则该条目下物料则使用错误文件）
@@ -465,9 +547,9 @@ Single Data Source:
 - 更新 Status of Goods 为 **Stocked**
 
 #### 视图
-
+- All
 #### 权限设置
-
+- Hide from Bar
 
 ### 盘点单
 
@@ -480,17 +562,21 @@ Single Data Source:
 - 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
 
 #### 按钮
+- None
 
 #### 业务规则
-
+- None
 #### 工作流
+- None
 
 ##### When adding new records:
 - 更新相关库存记录，call PBP - **出入库记录**
 
 #### 视图
+- All
 
 #### 权限设置
+- Hide from Bar
 
 ### 领用单（General）
 
@@ -540,9 +626,9 @@ Single Data Source:
 - 审批人签字
 
 #### 业务规则
+- None
 
 #### 工作流
-
 ##### When adding new records:
 - Action:
     - 若Index包含 **Caffeine**
@@ -551,8 +637,10 @@ Single Data Source:
         - 通知危险化学品审批人进行审批，审批人在审批通过时需签名确认。
 
 #### 视图
+- All
 
 #### 权限设置
+- Hide from Bar
 
 ### 归还单
 
@@ -565,17 +653,20 @@ Single Data Source:
 - 归还日期 | Return Date
 
 #### 按钮
+- None
 
 #### 业务规则
+- None
 
 #### 工作流
-
 ##### When adding new records:
 - 更新相关库存记录，call PBP - **出入库记录**
 
 #### 视图
+- All
 
 #### 权限设置
+- Hide from Bar
 
 ## Self-Made
 
@@ -618,12 +709,19 @@ Single Data Source:
         - 复制当前Record及其子表
         - 清空字段:
 #### 业务规则
-
+- When Status of Self-Made **Is one of** 已停用，已过期:
+    - Read-only all fields
+    
 #### 工作流
 
 #### 视图
 - All
 #### 权限设置
+- APTC Members:
+    - View (own)
+    - Edit (own)
+    - Delete (none)
+    - Add
 
 ### Preparation - PhyChem
 
@@ -717,6 +815,11 @@ Single Data Source:
 - My
 
 #### 权限设置
+- APTC Members:
+    - View (All)
+    - Edit (Owner)
+    - Delete (none)
+    - Add
 
 ### Preparation - Micro
 

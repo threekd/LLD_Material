@@ -22,7 +22,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 
 purchase_request=>operation: + Purchase Request
 purchase_item=>inputoutput: Purchase Item
-create_order=>operation: Create Purchase Order
+create_order=>operation: + Create Purchase Order
 supplier_confirmation=>subroutine: Supplier Delivery
 receipt_confirmation=>operation: Receipt Confirmation
 stock_in=>operation: Stock In
