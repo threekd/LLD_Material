@@ -707,12 +707,19 @@ Single Data Source:
 - Reproduce:
     - Action:
         - 复制当前Record及其子表
-        - 清空字段:
+        - 清空字段: **浓度 | Concentration**，**Attachment**，**Signature (P)**，**Signature (R)**，**Reviewer**，Preparation - **数量 | Amount**
+- 提交审批
+    - Action:
+        - 发给Reviewer进行审批，审批通过后更新审批状态和Reviewer签名
+    - Conditional:
+        - 当Status of Approval **is** 未审批
+        - 当Reviewer **is not empty**
 #### 业务规则
 - When Status of Self-Made **Is one of** 已停用，已过期:
     - Read-only all fields
     
 #### 工作流
+- None
 
 #### 视图
 - All
@@ -734,6 +741,8 @@ Single Data Source:
         - Operate Date **equals** This Week
 - Reagent (Relationship): **库存明细 | Inventory Details**
 - Self-Made
+    - Filter:
+        - Status of Self-Made **is** 可用的
 - 数量 | Amount
 - 单位 | Unit (auto)
 - 批号 | Batch Number (auto)
@@ -772,7 +781,7 @@ Single Data Source:
 - Name | 名称
 - 批号 | Batch Number: 默认当前日期，格式为YYYYMMDD
     > Function:CONCAT(YEAR(DATENOW()),IF(MONTH(DATENOW())<10,"0",""),MONTH(DATENOW()),IF(DAY(DATENOW())<10,"0",""),DAY(DATENOW()))
-- 数量 | Quantity
+- 分装个数 | Number
 - Package | 包装
 - Shelf-life (day)
 - Preparation Date
@@ -808,7 +817,8 @@ Single Data Source:
     - Read-only all fields
 
 #### 工作流
-- None
+- When adding new records:
+    - add equipment Using Record
 
 #### 视图
 - All
