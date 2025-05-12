@@ -200,7 +200,12 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 #### 按钮
 - 领用
     - Action:
-        - 弹出 **领用单 (General)**，触发 **新增领用单 (General)** 工作流，参见Change Log - 领用单 (General) - 工作流
+        - 弹出 **领用单 (General)**
+        - 更新相关库存记录，call PBP - **出入库记录**
+        - 当领用方式为单次领用时:
+            - 扣减库存为领用量，标记operation为**单次领用**
+        - 当领用方式为用后归还时，
+            - 扣减库存为0，标记operation为**领用待归还**
         - 若领用方式为 **用后归还 | Return After Use**，则更新 Status 为 **待归还 | Pending Return**
     - Conditional:
         - Material Status **equals** 可用的 | Available
@@ -208,12 +213,17 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 领用方式 | Use Type **not equal to** 无需领用 | No Required
 - 盘点
     - Action:
-        - 弹出 **盘点单**，触发 **新增盘点单** 工作流，参见Change Log - 盘点单 - 工作流
+        - 弹出 **盘点单**
+        - 更新相关库存记录，call PBP - **出入库记录**
     - Conditional:
         - Material Status **not any of** 已停用 | Disabled
 - 危化品领用
     - Action:
-        - 弹出 **领用单 (Controlled)**，触发 **新增危化品领用申请** 工作流，参见Change Log - 领用单 (Controlled) - 工作流
+        - 弹出 **领用单 (Controlled)**
+        - 若Index包含 **Caffeine**
+            - 通知咖啡因审批人进行审批，审批人在审批通过时需签名确认。
+        - 其他情况
+            - 通知危险化学品审批人进行审批，审批人在审批通过时需签名确认。
     - Conditianal:
         - Material Type **is any of** 管控物质 | Controlled
         - Material Status **not any of** 已停用 | Disabled, 已过期 | Expired，已用完 | Run Out
@@ -233,7 +243,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Action:
         - 弹出 **归还单**
         - 若 Material Status 为 **待归还 | Pending Return**，则更新状态为**可用的 | Available**
-        - 触发 **新增归还单** 工作流，参见 Change Log - 归还单 - 工作流
+        - 更新相关库存记录，call PBP - **出入库记录**
 
 #### 业务规则
 - When Material Status **Is one of** 已停用 | Disabled，已过期 | Expired
@@ -375,7 +385,21 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 #### 按钮
 Single Data Source:
 - 入库: 
-    - Action: 弹出**入库单**，触发 **新建入库单** workflow。(参见Changelog-入库单-工作流)
+    - Action: 弹出**入库单**
+    - 当MSDS不为空，更新物料清单中的MSDS
+        > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
+    - 若入库方式为合并入库:
+        - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
+            - 新建一条库存记录，call PBP - **出入库记录**
+        - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
+            - 若不存在该物料:
+                - 新建一条库存记录，call PBP - **出入库记录**
+            - 若已存在该物料:
+                - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
+    - 若入库方式为拆分入库:
+        - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
+
+    - 更新 Status of Goods 为 **Stocked**
     - Conditional: Status of Goods **Is one of** Received
 
 - 签收:
@@ -530,21 +554,6 @@ Single Data Source:
 
 #### 工作流
 - None
-##### When adding new records:
-- 当MSDS不为空，更新物料清单中的MSDS
->（可能会出问题，若有人上传错误文件，则该条目下物料则使用错误文件）
-- 若入库方式为合并入库:
-    - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
-        - 新建一条库存记录，call PBP - **出入库记录**
-    - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
-        - 若不存在该物料:
-            - 新建一条库存记录，call PBP - **出入库记录**
-        - 若已存在该物料:
-            - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
-- 若入库方式为拆分入库:
-    - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
-
-- 更新 Status of Goods 为 **Stocked**
 
 #### 视图
 - All
@@ -568,9 +577,6 @@ Single Data Source:
 - None
 #### 工作流
 - None
-
-##### When adding new records:
-- 更新相关库存记录，call PBP - **出入库记录**
 
 #### 视图
 - All
@@ -596,13 +602,7 @@ Single Data Source:
     - Required **领用量 | Number**
 
 #### 工作流
-
-##### When adding new records:
-- 更新相关库存记录，call PBP - **出入库记录**
-- 当领用方式为单次领用时:
-    - 扣减库存为领用量，标记operation为**单次领用**
-- 当领用方式为用后归还时，
-    - 扣减库存为0，标记operation为**领用待归还**
+- None
 
 #### 视图
 
@@ -629,12 +629,7 @@ Single Data Source:
 - None
 
 #### 工作流
-##### When adding new records:
-- Action:
-    - 若Index包含 **Caffeine**
-        - 通知咖啡因审批人进行审批，审批人在审批通过时需签名确认。
-    - 其他情况
-        - 通知危险化学品审批人进行审批，审批人在审批通过时需签名确认。
+- None
 
 #### 视图
 - All
@@ -659,8 +654,7 @@ Single Data Source:
 - None
 
 #### 工作流
-##### When adding new records:
-- 更新相关库存记录，call PBP - **出入库记录**
+- None
 
 #### 视图
 - All
