@@ -5,16 +5,17 @@
 ```mermaid
 
 graph TD
-    st([Start]) --> add_request[Requestor Submits Purchase Request]
-    add_request --> purchase_item[Purchase Details]
-    purchase_item --> add_purchase_order[Generate Purchase Order]
-    add_purchase_order --> create_PO[Place Order and Confirm Purchase]
-    create_PO --> supplier_confirm[Supplier Confirms Order and Ships Goods]
-    supplier_confirm --> receive_check{Purchaser Receives and Inspects Goods}
-    receive_check -->|Good| good_category{Is it a Consumable?}
-    receive_check -->|Broken| good_exchange[Contact Supplier for Return/Exchange] --> supplier_confirm
-    good_category -->|Yes| buyer_gr[Purchaser Stocks Goods] --> process_end([Process End])
-    good_category -->|No| user_gr[Requestor Stocks Goods] --> process_end([Process End])
-
+    st([Start]) --> req_submit[Requester Submits Purchase Request]
+    req_submit --> purchase_info[Purchase Items]
+    purchase_info --> gen_PO[Generate Purchase Order]
+    gen_PO --> confirm_order[Confirm Purchase and Place Order]
+    confirm_order --> supplier_confirm[Supplier Confirms Order and Ships Goods]
+    supplier_confirm --> receive_inspect{Purchaser Receives and Inspects Goods}
+    receive_inspect -->|Good| item_category{Is it a General Consumable?}
+    receive_inspect -->|Defective| item_return[Contact Supplier for Return/Exchange] --> supplier_confirm
+    item_category -->|Yes| stock_cons[Purchaser Stocks In] --> Rating[Supplier Rating]
+    Rating --> process_end([End of Process])
+    item_category -->|No| stock_noncons[Requester Stocks In] --> Evaluation[Supplier Rating and Brand & Product Evaluation]
+    Evaluation --> process_end([End])
 
 ```
