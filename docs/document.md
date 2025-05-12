@@ -801,7 +801,7 @@ Single Data Source:
 - Reproduce:
     - Action:
         - 复制当前Record及其子表
-        - 清空字段: **数量 | Quantity**，**灭菌后pH**，**Signature**，Preparations - **数量 | Amount**
+        - 清空字段: **数量 | Quantity**，**Signature**，Preparations - **数量 | Amount**
 
 #### 业务规则
 - When Status of Self-Made **Is one of** 已停用，已过期:
