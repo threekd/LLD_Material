@@ -26,7 +26,7 @@ index->material_info->material_list->Batch_info->inventory_details
 index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@>Batch_info({"stroke":"#9E9E9E"})@>inventory_details({"stroke":"#9E9E9E"})
 
 ```
-
+---
 ### 目录 | Index
 > 此表单的作用在于规范命名，便于库存查询和统计分析。
 
@@ -75,6 +75,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Edit (all)
     - Delete (all)
     - Add
+
+---
 ### 物料清单 | Material List
 > 此表单定义了与物质本身性质相关的内容，不包括批次信息。
 
@@ -151,6 +153,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Edit (all)
     - Delete (none)
     - Add
+
+---
 ### 库存明细 | Inventory Details
 > 此表单在 **物料清单 | Material List** 的基础上增加了批次信息及其验收记录。
 #### 字段
@@ -270,6 +274,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Delete (all)
     - Add
 
+
 ## Purchase:
 
 ```flow:vue
@@ -285,6 +290,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 
 ```
 
+---
 ### 采购申请 | Purchase Request
 
 #### 字段
@@ -338,6 +344,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
     - Delete (all)
     - Add
 
+---
 ### 采购明细 | Purchase Item
 
 #### 字段
@@ -438,6 +445,7 @@ Batch Data Source:
     - Delete (all)
     - Add
 
+---
 ### 采购单 | Purchase Order
 
 #### 字段
@@ -489,6 +497,7 @@ Single Data Source:
     - Delete (none)
     - Add
 
+
 ## Change Log
 
 ### 库存变动明细 | Stock Change Record
@@ -527,7 +536,7 @@ Single Data Source:
     - Edit (none)
     - Delete (none)
     - Add
-
+---
 ### 入库单
 
 #### 字段
@@ -560,6 +569,7 @@ Single Data Source:
 #### 权限设置
 - Hide from Bar
 
+---
 ### 盘点单
 
 #### 字段
@@ -584,6 +594,7 @@ Single Data Source:
 #### 权限设置
 - Hide from Bar
 
+---
 ### 领用单（General）
 
 #### 字段
@@ -596,6 +607,7 @@ Single Data Source:
 
 #### 按钮
 - None
+
 #### 业务规则
 - When **领用方式 | Use Type** is **单次领用 | Single Use**
     - Show **领用量 | Number**
@@ -605,9 +617,12 @@ Single Data Source:
 - None
 
 #### 视图
+- All
 
 #### 权限设置
+- Hide from Bar
 
+---
 ### 领用单 (Controlled)
 
 #### 字段
@@ -637,6 +652,7 @@ Single Data Source:
 #### 权限设置
 - Hide from Bar
 
+---
 ### 归还单
 
 #### 字段
@@ -724,6 +740,7 @@ Single Data Source:
     - Delete (none)
     - Add
 
+---
 ### Preparation - PhyChem
 
 #### 字段
@@ -763,6 +780,7 @@ Single Data Source:
 #### 权限设置
  - Hide from Bar
 
+---
 ### Self-Made - Micro
 
 #### 字段
@@ -825,6 +843,7 @@ Single Data Source:
     - Delete (none)
     - Add
 
+---
 ### Preparation - Micro
 
 #### 字段
