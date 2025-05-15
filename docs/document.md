@@ -631,6 +631,7 @@ Single Data Source:
 - 申请日期
 - 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
 - 使用目的
+- 最近一次称重
 - 用前称重
 - 用后称重
 - 实际使用量 (auto):
@@ -874,3 +875,77 @@ Single Data Source:
 
 #### 权限设置
  - Hide from Bar
+
+---
+
+## Location
+
+### Room List
+
+#### 字段
+- Room Name
+- Room_ID
+- Status
+- Room Code
+- Owner
+- 面积 | Area (m²)
+
+#### 按钮
+- None
+
+#### 业务规则
+- None
+
+#### 工作流
+- None
+
+#### 视图
+- All
+
+#### 权限设置
+- APTC Members:
+    - View (all)
+    - Edit (own)
+    - Delete (none)
+    - Add (none)
+- APP Manager:
+    - View (all)
+    - Edit (all)
+    - Delete (none)
+    - Add
+
+---
+
+### Storage Area List
+
+- title:
+    - [柜子号/货架号] | [储物家具类型]【[Room]】, [Storage Conditions]
+- StorageArea_ID
+- Room
+- Storage Conditions
+- 储物家具类型
+- 柜子号/货架号
+
+#### 按钮
+- None
+
+#### 业务规则
+- None
+
+#### 工作流
+- None
+
+#### 视图
+- All
+
+#### 权限设置
+- APTC Members:
+    - View (all)
+    - Edit (own)
+    - Delete (none)
+    - Add (none)
+- APP Manager:
+    - View (all)
+    - Edit (all)
+    - Delete (none)
+    - Add
