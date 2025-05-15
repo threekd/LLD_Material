@@ -245,7 +245,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - Material Status **not equal to** 已停用 | Disabled
 - 归还
     - Action:
-        - 弹出 **归还单**
+        - 弹出 **归还单 (General)**
         - 若 Material Status 为 **待归还 | Pending Return**，则更新状态为**可用的 | Available**
         - 更新相关库存记录，call PBP - **出入库记录**
 
@@ -668,7 +668,7 @@ Single Data Source:
 - Hide from Bar
 
 ---
-### 归还单
+### 归还单 (General)
 
 #### 字段
 - 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
@@ -695,7 +695,7 @@ Single Data Source:
 
 ## Self-Made
 
-### Self-made - PhyChem
+### Self-Made - PhyChem
 
 #### 字段
 - Title
