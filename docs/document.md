@@ -328,6 +328,8 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 - Purchase Item (Relationship): **采购明细 | Purchase Item**
 
 #### 按钮
+- 再来一单
+    - Action: 以当前采购申请单为模板，复制并生成一条新的采购申请单及其包含的采购项目。
 - Cancel
     - Action:
         - 将该申请单下的采购条目状态更新为 **Cancel**
