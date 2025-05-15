@@ -10,6 +10,10 @@
 >           - When adding new records
 >       - 视图
 >       - 权限设置
+>   - PBP
+>       - Input Pparameter
+>       - Action
+>       - Output Parameter
 
 ## Inventory
 
@@ -983,3 +987,6 @@ Single Data Source:
 #### Action
 - 添加一条库存变动记录
 - 若 变动后库存 <= 0，则更新库存状态为 **已用完 | Run Out**
+
+#### Output Parameter
+- None
