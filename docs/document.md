@@ -256,8 +256,13 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Show **Tab - 危化品领用单**
 
 #### 工作流
-- None
-
+- Time - 库存过期检查
+    - Trigger by date:
+        - 有效期至 | Expired Date
+    - Start Execution Time:
+        - Before 14 days 00:00
+    - Action:
+        - 14天后，更新库存状态为 **已过期 | Expired**
 #### 视图
 - All
 - 待处理 (已过期/已用完)
@@ -372,11 +377,8 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 - 货号 | Product Number
 - 单价 | Price
 - 总价 | Total Price (auto)
-- MSDS
 - 报价单 | Quotation
 - 备注 | Remark
-- 纯度等级 | Purity Grade
-- 纯度 | Purity
 
 ##### Tab - Stock Records:
 - 入库单 (Relationship): **入库单**
@@ -543,6 +545,9 @@ Single Data Source:
 
 #### 字段
 - 入库方式 | Stocking Method
+- Project Related:
+    - RMP/PTP
+    - Other
 - 采购明细 | Purchase Item (Relationship): **采购明细 | Purchase Item**
 - Operator (auto)
 - Operate Date (auto)
@@ -555,6 +560,12 @@ Single Data Source:
 - COA
 - MSDS
 - Storage Area List (Relationship): **Storage Area List**
+- 纯度等级 | Purity Grade
+- 纯度 | Purity
+    - Limit numerical range: [0,1]
+- 干燥失重 | Drying Loss
+    - Limit numerical range: [0,1]
+    - 若纯度已包含干燥失重计算，此处应为 0。
 - 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
 
 #### 按钮
