@@ -230,7 +230,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
             - 通知危险化学品审批人进行审批，审批人在审批通过时需签名确认。
     - Conditianal:
         - Material Type **is any of** 管控物质 | Controlled
-        - Material Status **not any of** 已停用 | Disabled, 已过期 | Expired，已用完 | Run Out
+        - Material Status **equals** 可用的 | Available
 - 再次购买
     - Action:
         - 弹出窗口，填写采购数量，Workflow会通过正则表达式确认输出为数字型。
@@ -260,7 +260,9 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 
 #### 视图
 - All
-- 已过期
+- 待处理 (已过期/已用完)
+    - Filter:
+        - Material Status **is any of** 已过期 | Expired，已用完 | Run Out
 
 #### 权限设置
 - APTC Members:
@@ -292,7 +294,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 
 ---
 ### 采购申请 | Purchase Request
-
+> 请购员提交的采购申请单。
 #### 字段
 
 - Status of Request (auto)：
@@ -346,7 +348,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 
 ---
 ### 采购明细 | Purchase Item
-
+> 采购申请单下的明细条目，采购员根据此条目生成采购单。采购员可以通过此页面跟踪采购进度。
 #### 字段
 
 ##### Tab - Basic:
@@ -632,6 +634,7 @@ Single Data Source:
 - 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
 - 使用目的
 - 最近一次称重
+    - 库存明细 | Inventory Details - **当前库存数量**
 - 用前称重
 - 用后称重
 - 实际使用量 (auto):
@@ -949,3 +952,23 @@ Single Data Source:
     - Edit (all)
     - Delete (none)
     - Add
+
+---
+
+## PBP
+> Packaged Business Process: 通过定义输入参数，让其他流程调用。如果需要使用封装业务流程中的执行结果，也可以通过输出参数，供外部流程使用。
+
+### 出入库记录
+
+#### Input Pparameter
+- Material Record ID(type Text)
+- Operator(type Personal)
+- Operate Date(type Date & Time)
+- Operation(type Text)
+- Action Type(type Text)
+- Number(type Number)
+- Operation(type Text)
+
+#### Action
+- 添加一条库存变动记录
+- 若 变动后库存 <= 0，则更新库存状态为 **已用完 | Run Out**
