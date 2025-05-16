@@ -11,7 +11,7 @@
 >       - 视图
 >       - 权限设置
 >   - PBP
->       - Input Pparameter
+>       - Input Parameter
 >       - Action
 >       - Output Parameter
 
@@ -848,7 +848,13 @@ Single Data Source:
 #### 业务规则
 - When Status of Self-Made **Is one of** 已停用，已过期:
     - Read-only all fields
-
+- Time - Self-Made - Micro 库存过期提醒
+    - Trigger by date:
+        - 有效期至 | Expired Date
+    - Start Execution Time:
+        - Before 14 days 00:00
+    - Action:
+        - 14天后，更新 Status of Self-Made 为 **已过期 | Expired**
 #### 工作流
 - When adding new records:
     - add equipment Using Record
