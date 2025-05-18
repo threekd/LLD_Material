@@ -54,8 +54,9 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Action: 弹出窗口，可修改当前物料 **别名 | Synonyms**
 
 #### 业务规则
-- When Material Index is **00_无需目录收录的物品 | Do not need Index** 
-    - Show **Material name**
+- When Has CAS Number **is** Yes
+    - Show **CAS Number**
+    - Required **CAS Number**
 
 #### 工作流
 - None
@@ -134,7 +135,9 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 - None
 
 #### 业务规则
-- None
+- When Material Index is **00_无需目录收录的物品 | Do not need Index** 
+    - Show **Material name**
+    - Requied **Material name**
 
 #### 工作流
 - None
@@ -308,7 +311,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 
 - Status of Request (auto)：
     - Submitted: 已下单条目=0
-    - Purchasing 已下单条目>0,已完成条目<条目总数
+    - In Progress 已下单条目>0,已完成条目<条目总数
     - Compeleted: 非以上条件
 
 - 采购用途 | Justification（required）
@@ -322,7 +325,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
     - Filter: Status of Goods **not any of** Initial,Cancel
 - 已完成条目 (auto):
     - Rollup: Number of Records
-    - Filter: Status of Goods **Is one of** Received,Cancel
+    - Filter: Status of Goods **Is one of** Cancel，Stocked
 - 请购项目数 (auto):
     - 所关联条目总数
 - Purchase Item (Relationship): **采购明细 | Purchase Item**
@@ -330,6 +333,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 #### 按钮
 - 再来一单
     - Action: 以当前采购申请单为模板，复制并生成一条新的采购申请单及其包含的采购项目。
+    - Conditional: Status of Request **not equal to** Submitted
 - Cancel
     - Action:
         - 将该申请单下的采购条目状态更新为 **Cancel**
@@ -379,6 +383,7 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 - Purchase Order (Relationship): **采购单 | Purchase Order**
 - 购买数量 | Number
 - 采购单位 | Unit
+- 品牌(生产商) | Brand (Required)
 - 供应商 | Supplier (Relationship): **供应商清单 | Supplier List**
 - 货号 | Product Number
 - 单价 | Price
@@ -405,6 +410,7 @@ Single Data Source:
     - Action: 弹出**入库单**
     - 当MSDS不为空，更新物料清单中的MSDS
         > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
+    - 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
     - 若入库方式为合并入库:
         - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
             - 新建一条库存记录，call PBP - **出入库记录**
@@ -429,7 +435,9 @@ Single Data Source:
 
 Batch Data Source:
 - 生成采购单:
-    - Action: 合并采购项目生成一条 **采购单 | Purchase Order**
+    - Action: 
+        - 合并采购项目生成一条 **采购单 | Purchase Order**
+        - 弹出新生成的采购单。
     - Conditional: Status of Goods **is** Initial
 
 #### 业务规则
