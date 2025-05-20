@@ -270,6 +270,10 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - Before 14 days 00:00
     - Action:
         - 14天后，更新库存状态为 **已过期 | Expired**
+- Trigger by Scheduled - 每日检查 (at 00:00)
+    Frequency: Daily
+    - Action:
+        - 若库存状态为 **待归还 | Pending Return**，则获取最近关联的领用单，通知领用人及时归还。
 #### 视图
 - All
 - 待处理 (已过期/已用完)
@@ -772,7 +776,17 @@ Single Data Source:
     - Read-only all fields
     
 #### 工作流
-- None
+- When adding new records:
+    - add equipment Using Record
+- Time - Self-Made - PhyChem 库存过期提醒
+    - Trigger by date:
+        - 有效期至 | Expired Date
+    - Start Execution Time:
+        - Before 14 days 00:00
+    - Action:
+        - 14天后，更新 Status of Self-Made 为 **已过期 | Expired**
+    - Conditional:
+        - Status of Self-Made **is** 可用的 | Available
 
 #### 视图
 - All
@@ -875,6 +889,10 @@ Single Data Source:
 #### 业务规则
 - When Status of Self-Made **Is one of** 已停用，已过期:
     - Read-only all fields
+
+#### 工作流
+- When adding new records:
+    - add equipment Using Record
 - Time - Self-Made - Micro 库存过期提醒
     - Trigger by date:
         - 有效期至 | Expired Date
@@ -882,10 +900,8 @@ Single Data Source:
         - Before 14 days 00:00
     - Action:
         - 14天后，更新 Status of Self-Made 为 **已过期 | Expired**
-#### 工作流
-- When adding new records:
-    - add equipment Using Record
-
+    - Conditional:
+        - Status of Self-Made **is** 可用的 | Available
 #### 视图
 - All
 - My
