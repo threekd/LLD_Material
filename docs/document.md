@@ -713,7 +713,17 @@ Single Data Source:
 
 #### 字段
 - Title
+    - [名称 | Name]_[批号 | Batch Number] - [Stock Level]
+- Status of Self-Made:
+    - 可用的 | Available
+    - 已过期 | Expired
+    - 已停用 | Disabled
+- Self-Made_ID
+- Method
+    - Filter：
+        - Category **Is one of** Testing Method(WI), Work Instruction(excl.method)/ Work Aid
 - 名称 | Name
+- Stock Level
 - 溶剂 | Solvent
 - 批号 | Batch Number: 默认当前日期，格式为YYYYMMDD
     > Function:CONCAT(YEAR(DATENOW()),IF(MONTH(DATENOW())<10,"0",""),MONTH(DATENOW()),IF(DAY(DATENOW())<10,"0",""),DAY(DATENOW()))
@@ -741,8 +751,12 @@ Single Data Source:
 - Equipment (Relationship): **Equipment**
 
 #### 按钮
-- Disable: 将状态更新为已停用，只读所有字段。
-- Print
+- Disable: 
+    - Action:
+        - 将状态更新为已停用。
+    - Conditional:
+        - 当Status of Self-Made **not equal to** 已停用 | Disabled
+- Print（待实现）
 - Reproduce:
     - Action:
         - 复制当前Record及其子表
@@ -754,7 +768,7 @@ Single Data Source:
         - 当Status of Approval **is** 未审批
         - 当Reviewer **is not empty**
 #### 业务规则
-- When Status of Self-Made **Is one of** 已停用，已过期:
+- When (Status of Self-Made **Is one of** 已停用 | Disabled，已过期 | Expired) or Status of Approval **is** 已审批:
     - Read-only all fields
     
 #### 工作流
@@ -786,6 +800,10 @@ Single Data Source:
 - 数量 | Amount
 - 单位 | Unit (auto)
 - 批号 | Batch Number (auto)
+- 纯度 | Purity
+    - Default: Material - 纯度 | Purity
+- 干燥失重 | Drying Loss
+    - Default: Material - 干燥失重 | Drying Loss
 
 #### 按钮
 - None
@@ -799,7 +817,8 @@ Single Data Source:
     - Required Material
 - When Material i**s not empty** or Self-Made **is not empty**
     - Hide Or
-
+- When (Status of Self-Made **Is one of** 已停用 | Disabled，已过期 | Expired) or Status of Approval **is** 已审批:
+    - Read-only all fields
 #### 工作流
 - None
 
