@@ -1,4 +1,5 @@
 # Low Level Design Document
+
 > 文档结构:
 >- 分组
 >   - 表单
@@ -110,6 +111,10 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，从而触发安全库存预警，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
     - Others
         - 无需库存管理的物品。
+- Material Category:
+    - Chemical
+    - Micro
+    - Consumable
 - MSDS
 - 包装 | Package
 - 规格 / 浓度 / 当量 /etc.
@@ -192,6 +197,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 - 备注 | Remarks
 - 货号 | Product Number
 - 预估单价
+- 采购明细 | Purchase Item (Relationship): **采购明细 | Purchase Item**
 - 供应商 | Supplier (Relationship): **供应商清单 | Supplier List**
 
 ##### Tab - Stock Change Info.
