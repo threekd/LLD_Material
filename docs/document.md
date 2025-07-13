@@ -261,6 +261,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 弹出 **归还单 (General)**
         - 若 Material Status 为 **待归还 | Pending Return**，则更新状态为**可用的 | Available**
         - 更新相关库存记录，call PBP - **出入库记录**
+- 打印标签
 
 #### 业务规则
 - When Material Status **Is one of** 已停用 | Disabled，已过期 | Expired
@@ -590,7 +591,10 @@ Single Data Source:
 - 干燥失重 | Drying Loss
     - Limit numerical range: [0,1]
     - 若纯度已包含干燥失重计算，此处应为 0。
+- 货号 | Product Number
+- 单价 | Price
 - 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
+- 供应商 | Supplier: **供应商清单 | Supplier List**
 
 #### 按钮
 - None
@@ -1030,7 +1034,7 @@ Single Data Source:
 ## PBP
 > Packaged Business Process: 通过定义输入参数，让其他流程调用。如果需要使用封装业务流程中的执行结果，也可以通过输出参数，供外部流程使用。
 
-### 出入库记录
+### 添加出入库变动记录
 
 #### Input Pparameter
 - Material Record ID(type Text)
@@ -1047,3 +1051,7 @@ Single Data Source:
 
 #### Output Parameter
 - None
+
+### 入库
+
+#### Input Parameter
