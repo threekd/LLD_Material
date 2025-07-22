@@ -419,22 +419,10 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 #### 按钮
 Single Data Source:
 - 入库: 
-    - Action: 弹出**入库单**
-    - 当MSDS不为空，更新物料清单中的MSDS
-        > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
-    - 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
-    - 若入库方式为合并入库:
-        - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
-            - 新建一条库存记录，call PBP - **出入库记录**
-        - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
-            - 若不存在该物料:
-                - 新建一条库存记录，call PBP - **出入库记录**
-            - 若已存在该物料:
-                - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
-    - 若入库方式为拆分入库:
-        - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
+    - Action: 
+        - 弹出**入库单**
+        - Call PBP - **物料新增入库**
 
-    - 更新 Status of Goods 为 **Stocked**
     - Conditional: Status of Goods **Is one of** Received
 
 - 签收:
@@ -604,7 +592,9 @@ Single Data Source:
 - None
 
 #### 工作流
-- None
+- When adding new records:
+    - Call PBP - **物料新增入库**
+    - 若入库单货号和单价为空，获取物料清单中的货号和预估单价并更新至库存明细。
 
 #### 视图
 - All
@@ -1004,7 +994,7 @@ Single Data Source:
 - Room
 - Storage Conditions
 - 储物家具类型
-- 柜子号/货架号
+- 名称/柜子号/货架号
 
 #### 按钮
 - None
@@ -1053,6 +1043,28 @@ Single Data Source:
 #### Output Parameter
 - None
 
-### 入库
+### 物料新增入库
 
 #### Input Parameter
+- stockIn_recordID (type Text)
+
+#### Action:
+    - 当MSDS不为空，更新物料清单中的MSDS
+        > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
+    - 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
+    - 若入库方式为合并入库:
+        - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
+            - 新建一条库存记录，call PBP - **出入库记录**
+        - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
+            - 若不存在该物料:
+                - 新建一条库存记录，call PBP - **出入库记录**
+            - 若已存在该物料:
+                - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
+    - 若入库方式为拆分入库:
+        - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
+
+    - 更新 Status of Goods 为 **Stocked**
+    - Conditional: Status of Goods **Is one of** Received
+
+#### Output Parameter
+- stockIn_recordID (type Text)
