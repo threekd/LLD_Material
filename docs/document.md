@@ -104,9 +104,9 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 领用时需通过危化品领用单，双人双签。
     - 标准品 | Reference Material
         - 常规领用单，入库后需验收。
-    - Consumable - key
+    - key Material
         - 常规领用单，需填写领用记录。
-    - Consumable - Regular
+    - Regular Material
         - 由采购人员定期盘点库存，无需领用。
         - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，从而触发安全库存预警，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
     - Others
