@@ -938,7 +938,7 @@ Single Data Source:
     - Filter: Material Status **Is one of** 可用的 | Available，待归还 | Pending Return
 - Self-Made - Micro (Relationship): **Self-Made - Micro**
 - 数量 | Amount
-- 领用单位 | Unit (auto)
+- 单位 | Unit
 - 批号 | Batch Number (auto)
 
 #### 按钮
