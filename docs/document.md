@@ -132,7 +132,9 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Rollup **当前库存总量**
     - Sum
 
-- 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
+- Stock List (Relationship): **库存明细 | Inventory Details**
+    - Fitler:
+        - Material Status **is not any of** 已停用 | Disabled
 ##### Tab - Supplier
 - Supplier: **供应商清单 | Supplier List (Relationship)**
 
@@ -285,9 +287,6 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 若库存状态为 **待归还 | Pending Return**，则获取最近关联的领用单，通知领用人及时归还。
 #### 视图
 - All
-- 待处理 (已过期/已用完)
-    - Filter:
-        - Material Status **is any of** 已过期 | Expired，已用完 | Run Out
 
 #### 权限设置
 - APTC Members:
@@ -361,7 +360,8 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 
 #### 视图
 - All
-
+- My
+    - Filter: Requestor **equals** Current User
 #### 权限设置
 - APTC Members:
     - View (own)
@@ -543,7 +543,8 @@ Single Data Source:
 
 #### 视图
 - All
-
+- My
+    - Filter: Operator **equals** Current User
 #### 权限设置
 - APTC Members:
     - View (own)
@@ -602,6 +603,9 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
+
 #### 权限设置
 - Hide from Bar
 
@@ -626,6 +630,8 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
 
 #### 权限设置
 - Hide from Bar
@@ -654,7 +660,8 @@ Single Data Source:
 
 #### 视图
 - All
-
+- My
+    - Filter: Operator **equals** Current User
 #### 权限设置
 - Hide from Bar
 
@@ -686,6 +693,8 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
 
 #### 权限设置
 - Hide from Bar
@@ -712,6 +721,8 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
 
 #### 权限设置
 - Hide from Bar
@@ -795,6 +806,9 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Prepared by **equals** Current User
+
 #### 权限设置
 - APTC Members:
     - View (own)
@@ -911,6 +925,7 @@ Single Data Source:
 #### 视图
 - All
 - My
+    - Filter: Prepared by **equals** Current User
 
 #### 权限设置
 - APTC Members:
@@ -997,6 +1012,10 @@ Single Data Source:
 - title:
     - [柜子号/货架号] | [储物家具类型]【[Room]】, [Storage Conditions]
 - StorageArea_ID
+- StorageArea Type:
+    - Phy/Chem
+    - Micro
+    - General
 - Room
 - Storage Conditions
 - 储物家具类型
