@@ -108,9 +108,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 常规领用单，需填写领用记录。
     - Routine Material (Non-Traceable)
         - 由采购人员定期盘点库存，无需领用。
-        - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，从而触发安全库存预警，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
-    - Others
-        - 无需库存管理的物品。
+        - 不需要关注批次信息（包括批号，COA等）
+        - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
 - Material Category:
     - Chemical
     - Micro
@@ -240,6 +239,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 弹出 **领用单 (Controlled)**
         - 若Index包含 **Caffeine**
             - 通知咖啡因审批人进行审批，审批人在审批通过时需签名确认。
+        - 若Materail Category为 **Micro**
+            - 通知菌株审批人进行审批，审批人在审批通过时需签名确认。
         - 其他情况
             - 通知危险化学品审批人进行审批，审批人在审批通过时需签名确认。
     - Conditianal:
@@ -559,6 +560,9 @@ Single Data Source:
 
 #### 字段
 - 入库方式 | Stocking Method
+    - 拆分入库:为同一批次多个物品建立多个不同Record及二维码
+    - 合并入库:为同一批次多个物品建立同一个Record及二维码。
+    - 更新库存：仅更新库存，适用于如离心管，手套等消耗品。
 - Project Related:
     - RMP/PTP
     - Other
@@ -808,6 +812,7 @@ Single Data Source:
     - Filter:
         - Operator **is** Owner (Current Record)
         - Operate Date **equals** This Week
+        - **库存明细 | Inventory Details** is not empty
 - Reagent (Relationship): **库存明细 | Inventory Details**
 - Self-Made
     - Filter:
@@ -924,6 +929,7 @@ Single Data Source:
     - Filter:
         - Operator **is** Owner (Current Record)
         - Operate Date **equals** This Week
+        - **库存明细 | Inventory Details** is not empty
 - Reagent (Relationship): **库存明细 | Inventory Details**
     - Filter: Material Status **Is one of** 可用的 | Available，待归还 | Pending Return
 - Self-Made - Micro (Relationship): **Self-Made - Micro**
@@ -1049,22 +1055,25 @@ Single Data Source:
 - stockIn_recordID (type Text)
 
 #### Action:
-    - 当MSDS不为空，更新物料清单中的MSDS
-        > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
-    - 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
-    - 若入库方式为合并入库:
-        - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
-            - 新建一条库存记录，call PBP - **出入库记录**
-        - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
-            - 若不存在该物料:
-                - 新建一条库存记录，call PBP - **出入库记录**
-            - 若已存在该物料:
-                - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
-    - 若入库方式为拆分入库:
-        - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
+- 当MSDS不为空，更新物料清单中的MSDS
+    > 注意: 若有人上传错误文件，则该条目下物料则使用错误文件
+- 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
+- 若入库方式为拆分入库:
+    - 根据入库数量，创建n个相同的库存记录
+    - call PBP - **出入库记录**
+- 若入库方式为合并入库:
+    - 新建一条库存记录
+    - call PBP - **出入库记录**
+- 若入库方式为更新库存:
+    - 若不存在该物料:
+            - 新建一条库存记录
+            - call PBP - **出入库记录**
+    - 若已存在该物料:
+            - 更新该物料批号，入库日期，库区库位
+            - call PBP - **出入库记录**
 
-    - 更新 Status of Goods 为 **Stocked**
-    - Conditional: Status of Goods **Is one of** Received
+- 更新 Status of Goods 为 **Stocked**
+- Conditional: Status of Goods **Is one of** Received
 
 #### Output Parameter
 - stockIn_recordID (type Text)
