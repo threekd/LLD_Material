@@ -104,9 +104,9 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 领用时需通过危化品领用单，双人双签。
     - 标准品 | Reference Material
         - 常规领用单，入库后需验收。
-    - key Material
+    - Traceability-Required Material
         - 常规领用单，需填写领用记录。
-    - Regular Material
+    - Routine Material (Non-Traceable)
         - 由采购人员定期盘点库存，无需领用。
         - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，从而触发安全库存预警，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
     - Others
@@ -419,22 +419,10 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 #### 按钮
 Single Data Source:
 - 入库: 
-    - Action: 弹出**入库单**
-    - 当MSDS不为空，更新物料清单中的MSDS
-        > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
-    - 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
-    - 若入库方式为合并入库:
-        - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
-            - 新建一条库存记录，call PBP - **出入库记录**
-        - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
-            - 若不存在该物料:
-                - 新建一条库存记录，call PBP - **出入库记录**
-            - 若已存在该物料:
-                - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
-    - 若入库方式为拆分入库:
-        - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
+    - Action: 
+        - 弹出**入库单**
+        - Call PBP - **物料新增入库**
 
-    - 更新 Status of Goods 为 **Stocked**
     - Conditional: Status of Goods **Is one of** Received
 
 - 签收:
@@ -604,7 +592,9 @@ Single Data Source:
 - None
 
 #### 工作流
-- None
+- When adding new records:
+    - Call PBP - **物料新增入库**
+    - 若入库单货号和单价为空，获取物料清单中的货号和预估单价并更新至库存明细。
 
 #### 视图
 - All
@@ -1004,7 +994,7 @@ Single Data Source:
 - Room
 - Storage Conditions
 - 储物家具类型
-- 柜子号/货架号
+- 名称/柜子号/货架号
 
 #### 按钮
 - None
@@ -1053,6 +1043,28 @@ Single Data Source:
 #### Output Parameter
 - None
 
-### 入库
+### 物料新增入库
 
 #### Input Parameter
+- stockIn_recordID (type Text)
+
+#### Action:
+    - 当MSDS不为空，更新物料清单中的MSDS
+        > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
+    - 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
+    - 若入库方式为合并入库:
+        - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
+            - 新建一条库存记录，call PBP - **出入库记录**
+        - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
+            - 若不存在该物料:
+                - 新建一条库存记录，call PBP - **出入库记录**
+            - 若已存在该物料:
+                - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
+    - 若入库方式为拆分入库:
+        - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
+
+    - 更新 Status of Goods 为 **Stocked**
+    - Conditional: Status of Goods **Is one of** Received
+
+#### Output Parameter
+- stockIn_recordID (type Text)
