@@ -106,9 +106,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 常规领用单，入库后需验收。
     - Traceability-Required Material
         - 常规领用单，需填写领用记录。
-    - Routine Material (Non-Traceable)
-        - 由采购人员定期盘点库存，无需领用。
-        - 不需要关注批次信息（包括批号，COA等）
+    - Routine Material
+        - 消耗品类Routine Material由采购人员定期盘点库存，无需领用。
         - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
 - Material Category:
     - Chemical
@@ -191,6 +190,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - range: [0-1]
 - COA
 - MSDS: 来自上一级 **物料清单 | Material List**
+- 实物图: 来自上一级 **物料清单 | Material List**
 - 当前库存数量
     - Rollup **变动数量 | Number - Changed**
     - Sum
