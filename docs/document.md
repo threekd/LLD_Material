@@ -125,6 +125,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 - 领用单位 | Unit (Required)
 - 库存换算系数
 > 库存数量 = 库存换算系数 * 采购数量。如一瓶溶液包装为“500ml（/瓶）”，领用单位为“ml”，因采购单位为“瓶”，，则库存换算系数应设为“500”。此设计旨在确保领用时准确扣除库存。
+- 备注 | Remark
 ##### Tab - Inventory Info.
 - 安全库存
 - 当前库存总量 (auto)
