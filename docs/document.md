@@ -681,6 +681,7 @@ Single Data Source:
 - 用后称重
 - 实际使用量 (auto):
     - 用后称重 - 用前称重
+- 领用单位 | Unit (auto)
 - 申请人
 - 审批人
 - 申请人签字
