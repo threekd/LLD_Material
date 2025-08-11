@@ -764,6 +764,7 @@ Single Data Source:
     - Corrosive
     - Flammable
     - Toxic
+- Storage Area (Relationship): **Storage Area List**
 - 备注 | Remark
 - Prepared by
 - Reviewer
