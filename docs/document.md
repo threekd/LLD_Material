@@ -104,6 +104,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 领用时需通过危化品领用单，双人双签。
     - 标准品 | Reference Material
         - 常规领用单，入库后需验收。
+    - PP&E | 防护用品
     - Traceability-Required Material
         - 常规领用单，需填写领用记录。
     - Routine Material
