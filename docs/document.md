@@ -106,11 +106,9 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 常规领用单，入库后需验收。
     - Traceability-Required Material
         - 常规领用单，需填写领用记录。
-    - Routine Material (Non-Traceable)
-        - 由采购人员定期盘点库存，无需领用。
-        - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，从而触发安全库存预警，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
-    - Others
-        - 无需库存管理的物品。
+    - Routine Material
+        - 消耗品类Routine Material由采购人员定期盘点库存，无需领用。
+        - 当库存不足时，任何人都可以点击 **盘点** 按钮以标注实际库存，方便采购人员及时补货。也可以直接点击 **再次购买** 按钮，系统将自动生成采购申请单。
 - Material Category:
     - Chemical
     - Micro
@@ -127,13 +125,16 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
 - 领用单位 | Unit (Required)
 - 库存换算系数
 > 库存数量 = 库存换算系数 * 采购数量。如一瓶溶液包装为“500ml（/瓶）”，领用单位为“ml”，因采购单位为“瓶”，，则库存换算系数应设为“500”。此设计旨在确保领用时准确扣除库存。
+- 备注 | Remark
 ##### Tab - Inventory Info.
 - 安全库存
 - 当前库存总量 (auto)
     - Rollup **当前库存总量**
     - Sum
 
-- 库存明细 | Inventory Details (Relationship): **库存明细 | Inventory Details**
+- Stock List (Relationship): **库存明细 | Inventory Details**
+    - Fitler:
+        - Material Status **is not any of** 已停用 | Disabled
 ##### Tab - Supplier
 - Supplier: **供应商清单 | Supplier List (Relationship)**
 
@@ -190,6 +191,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - range: [0-1]
 - COA
 - MSDS: 来自上一级 **物料清单 | Material List**
+- 实物图: 来自上一级 **物料清单 | Material List**
 - 当前库存数量
     - Rollup **变动数量 | Number - Changed**
     - Sum
@@ -240,6 +242,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 弹出 **领用单 (Controlled)**
         - 若Index包含 **Caffeine**
             - 通知咖啡因审批人进行审批，审批人在审批通过时需签名确认。
+        - 若Materail Category为 **Micro**
+            - 通知菌株审批人进行审批，审批人在审批通过时需签名确认。
         - 其他情况
             - 通知危险化学品审批人进行审批，审批人在审批通过时需签名确认。
     - Conditianal:
@@ -284,9 +288,6 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 若库存状态为 **待归还 | Pending Return**，则获取最近关联的领用单，通知领用人及时归还。
 #### 视图
 - All
-- 待处理 (已过期/已用完)
-    - Filter:
-        - Material Status **is any of** 已过期 | Expired，已用完 | Run Out
 
 #### 权限设置
 - APTC Members:
@@ -360,7 +361,8 @@ purchase_request->purchase_item->create_order->supplier_confirmation->receipt_co
 
 #### 视图
 - All
-
+- My
+    - Filter: Requestor **equals** Current User
 #### 权限设置
 - APTC Members:
     - View (own)
@@ -543,7 +545,8 @@ Single Data Source:
 
 #### 视图
 - All
-
+- My
+    - Filter: Operator **equals** Current User
 #### 权限设置
 - APTC Members:
     - View (own)
@@ -560,6 +563,9 @@ Single Data Source:
 
 #### 字段
 - 入库方式 | Stocking Method
+    - 拆分入库:为同一批次多个物品建立多个不同Record及二维码
+    - 合并入库:为同一批次多个物品建立同一个Record及二维码。
+    - 更新库存：仅更新库存，适用于如离心管，手套等消耗品。
 - Project Related:
     - RMP/PTP
     - Other
@@ -599,6 +605,9 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
+
 #### 权限设置
 - Hide from Bar
 
@@ -623,6 +632,8 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
 
 #### 权限设置
 - Hide from Bar
@@ -651,7 +662,8 @@ Single Data Source:
 
 #### 视图
 - All
-
+- My
+    - Filter: Operator **equals** Current User
 #### 权限设置
 - Hide from Bar
 
@@ -670,6 +682,7 @@ Single Data Source:
 - 用后称重
 - 实际使用量 (auto):
     - 用后称重 - 用前称重
+- 领用单位 | Unit (auto)
 - 申请人
 - 审批人
 - 申请人签字
@@ -683,6 +696,8 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
 
 #### 权限设置
 - Hide from Bar
@@ -709,6 +724,8 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Operator **equals** Current User
 
 #### 权限设置
 - Hide from Bar
@@ -748,6 +765,7 @@ Single Data Source:
     - Corrosive
     - Flammable
     - Toxic
+- Storage Area (Relationship): **Storage Area List**
 - 备注 | Remark
 - Prepared by
 - Reviewer
@@ -792,6 +810,9 @@ Single Data Source:
 
 #### 视图
 - All
+- My
+    - Filter: Prepared by **equals** Current User
+
 #### 权限设置
 - APTC Members:
     - View (own)
@@ -809,6 +830,7 @@ Single Data Source:
     - Filter:
         - Operator **is** Owner (Current Record)
         - Operate Date **equals** This Week
+        - **库存明细 | Inventory Details** is not empty
 - Reagent (Relationship): **库存明细 | Inventory Details**
 - Self-Made
     - Filter:
@@ -907,6 +929,7 @@ Single Data Source:
 #### 视图
 - All
 - My
+    - Filter: Prepared by **equals** Current User
 
 #### 权限设置
 - APTC Members:
@@ -925,6 +948,7 @@ Single Data Source:
     - Filter:
         - Operator **is** Owner (Current Record)
         - Operate Date **equals** This Week
+        - **库存明细 | Inventory Details** is not empty
 - Reagent (Relationship): **库存明细 | Inventory Details**
     - Filter: Material Status **Is one of** 可用的 | Available，待归还 | Pending Return
 - Self-Made - Micro (Relationship): **Self-Made - Micro**
@@ -992,6 +1016,10 @@ Single Data Source:
 - title:
     - [柜子号/货架号] | [储物家具类型]【[Room]】, [Storage Conditions]
 - StorageArea_ID
+- StorageArea Type:
+    - Phy/Chem
+    - Micro
+    - General
 - Room
 - Storage Conditions
 - 储物家具类型
@@ -1050,22 +1078,25 @@ Single Data Source:
 - stockIn_recordID (type Text)
 
 #### Action:
-    - 当MSDS不为空，更新物料清单中的MSDS
-        > (注意: 若有人上传错误文件，则该条目下物料则使用错误文件)
-    - 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
-    - 若入库方式为合并入库:
-        - 当Material Type **is any of** 甲类，管控，标准品，Consumable-key:
-            - 新建一条库存记录，call PBP - **出入库记录**
-        - 当Material Type **is none of** 甲类，管控，标准品,Consumable-key:
-            - 若不存在该物料:
-                - 新建一条库存记录，call PBP - **出入库记录**
-            - 若已存在该物料:
-                - 更新该物料批号，入库日期，库区库位，call PBP - **出入库记录**
-    - 若入库方式为拆分入库:
-        - 根据入库数量，创建n个相同的库存记录。call PBP - **出入库记录**
+- 当MSDS不为空，更新物料清单中的MSDS
+    > 注意: 若有人上传错误文件，则该条目下物料则使用错误文件
+- 若采购明细中货号和单价不为空，则更新物料清单中的货号和预估单价。
+- 若入库方式为拆分入库:
+    - 根据入库数量，创建n个相同的库存记录
+    - call PBP - **出入库记录**
+- 若入库方式为合并入库:
+    - 新建一条库存记录
+    - call PBP - **出入库记录**
+- 若入库方式为更新库存:
+    - 若不存在该物料:
+            - 新建一条库存记录
+            - call PBP - **出入库记录**
+    - 若已存在该物料:
+            - 更新该物料批号，入库日期，库区库位
+            - call PBP - **出入库记录**
 
-    - 更新 Status of Goods 为 **Stocked**
-    - Conditional: Status of Goods **Is one of** Received
+- 更新 Status of Goods 为 **Stocked**
+- Conditional: Status of Goods **Is one of** Received
 
 #### Output Parameter
 - stockIn_recordID (type Text)
