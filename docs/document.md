@@ -478,8 +478,9 @@ Batch Data Source:
 - 实际总花费 | Total: 采购人员填写该订单实际花费。
 - 备注 | Remark
 - 汇总金额 (auto): 汇总所列项目金额，原则上应与实际总花费一致。
-- 入库明细数
+- 签收明细数
 - 采购明细数
+    - Filter: Status of Goods **Is one of** Received,Stocked.
 - Purchase Item (Relationship): **采购明细 | Purchase Item**
 
 #### 按钮
