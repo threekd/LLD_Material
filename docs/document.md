@@ -114,7 +114,8 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
     - Micro
     - Consumable
 - MSDS
-- 实物图（仅供参考）
+- 实物图
+    - 应尽可能上传物品的实物图，便于后续领用和查验。
 - 包装 | Package
 - 规格 / 浓度 / 当量 /etc.
 > 规格是产品的具体描述，包装是产品的外部包装方式。如一包50ml离心管，其规格为“50ml”,包装为“25个/包”。如2L 37%盐酸溶液，其规格或浓度为“37%”，包装为“2L”或“2L/瓶”。同一个物品可以有不同包装，但规格不同一定是不同的物品。
@@ -450,6 +451,8 @@ Batch Data Source:
 
 #### 视图
 - All
+- Initial
+    - Filter: Status of Goods **equals** Initial
 - My
     - Filter: Requisitioner | 请购员 **equals** Current User
 
