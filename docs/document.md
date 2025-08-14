@@ -104,6 +104,7 @@ index@>material_info({"stroke":"#9E9E9E"})@>material_list({"stroke":"#9E9E9E"})@
         - 领用时需通过危化品领用单，双人双签。
     - 标准品 | Reference Material
         - 常规领用单，入库后需验收。
+    - PP&E | 防护用品
     - Traceability-Required Material
         - 常规领用单，需填写领用记录。
     - Routine Material
@@ -483,8 +484,9 @@ Batch Data Source:
 - 实际总花费 | Total: 采购人员填写该订单实际花费。
 - 备注 | Remark
 - 汇总金额 (auto): 汇总所列项目金额，原则上应与实际总花费一致。
-- 入库明细数
+- 签收明细数
 - 采购明细数
+    - Filter: Status of Goods **Is one of** Received,Stocked.
 - Purchase Item (Relationship): **采购明细 | Purchase Item**
 
 #### 按钮
